@@ -150,7 +150,7 @@ src/
 
 1. 저장소 클론
    ```
-   git clone <repository-url>
+   git clone <https://github.com/FunctionalFactory/nestjs_rest_api.git>
    ```
 
 2. 의존성 설치
