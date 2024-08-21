@@ -16,4 +16,5 @@ export interface IUserProfile {
   name: string;
   createdAt: Date;
   updatedAt: Date;
+  refreshToken?: string;
 }
