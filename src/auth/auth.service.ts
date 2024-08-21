@@ -47,8 +47,27 @@ export class AuthService {
     }
     // JWT 토큰 생성(디지털 신분증)
     const payload = { email: user.email, sub: user.id };
+    const accessToken = this.jwtService.sign(payload, { expiresIn: '15m' });
+    const refreshToken = this.jwtService.sign(payload, { expiresIn: '7d' });
+    await this.usersService.setRefreshToken(user.id, refreshToken);
     return {
-      access_token: this.jwtService.sign(payload),
+      access_token: accessToken,
+      refresh_token: refreshToken,
+    };
+  }
+
+  // 리프레쉬 토큰 생성
+  async refreshToken(userId: number, refreshToken: string) {
+    // 리프레쉬 토큰이 유효한지 확인
+    const user = await this.usersService.getUserProfile(userId);
+    if (!user || user.refreshToken !== refreshToken) {
+      throw new UnauthorizedException('Invalid refresh token');
+    }
+    // 액세스 토큰 생성
+    const payload = { email: user.email, sub: user.id };
+    const accessToken = this.jwtService.sign(payload, { expiresIn: '15m' });
+    return {
+      access_token: accessToken,
     };
   }
 }

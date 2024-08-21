@@ -61,7 +61,8 @@ src/
    - 회원가입
    - 로그인 (JWT 토큰 발급)
    - 회원탈퇴
-
+   - 리프레쉬 토큰 생성
+   
 2. 사용자 관리 (Users)
    - 사용자 정보 조회/수정
 
@@ -83,11 +84,12 @@ src/
 ### Auth
 - POST /auth/register: 회원가입
 - POST /auth/login: 로그인
-- DELETE /auth/withdraw: 회원탈퇴
+- POST /auth/refresh: 리프레쉬 토큰 생성
 
 ### Users
 - GET /users/me: 현재 사용자 정보 조회
 - PATCH /users/me: 현재 사용자 정보 수정
+- DELETE /users/withdraw: 현재 사용자 탈퇴
 
 ### Posts
 - POST /posts: 게시물 작성
