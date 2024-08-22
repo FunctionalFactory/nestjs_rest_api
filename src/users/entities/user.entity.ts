@@ -1,4 +1,5 @@
 import { Board } from 'src/boards/entities/board.entity';
+import { Comment } from '../../comments/entities/comment.entity';
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, OneToMany } from 'typeorm';
 
 @Entity()
@@ -29,4 +30,7 @@ export class User {
 
   @OneToMany(() => Board, board => board.author)
   boards: Board[];
+
+  @OneToMany(() => Comment, comment => comment.author)
+comments: Comment[];
 }
