@@ -1,20 +1,26 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, ManyToOne, OneToMany } from 'typeorm';
 import { User } from '../../users/entities/user.entity';
-import { Comment } from '../../comments/entities/comment.entity';
+import { Board } from '../../boards/entities/board.entity';
 
 @Entity()
-export class Board {
+export class Comment {
   @PrimaryGeneratedColumn()
   id: number;
-
-  @Column()
-  title: string;
 
   @Column('text')
   content: string;
 
-  @ManyToOne(() => User, user => user.boards)
+  @ManyToOne(() => User, user => user.comments)
   author: User;
+
+  @ManyToOne(() => Board, board => board.comments)
+  board: Board;
+
+  @ManyToOne(() => Comment, comment => comment.replies, { nullable: true })
+  parent: Comment;
+
+  @OneToMany(() => Comment, comment => comment.parent)
+  replies: Comment[];
 
   @CreateDateColumn()
   createdAt: Date;
@@ -24,7 +30,4 @@ export class Board {
 
   @DeleteDateColumn()
   deletedAt: Date;
-
-  @OneToMany(() => Comment, comment => comment.board)
-comments: Comment[];
 }
